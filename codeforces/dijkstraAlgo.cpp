@@ -1,57 +1,49 @@
-//dijkstra algo
+// Dijkstra algo
 
 #include<bits/stdc++.h>
 #define MAX 100
 using namespace std;
 
-void swap( int *x, int *y )
-{
+void swap( int *x, int *y ) {
 	int temp = *x;
 	*x = *y;
 	*y = temp;
 }
 
-class minPriorityQueue
-{
+class minPriorityQueue {
 	pair <int, int> arr[MAX];
 	int size;
 	
 	public:
-		minPriorityQueue()
-		{
+		minPriorityQueue() {
 			size = 0;
 		}
 		
-		bool isEmpty()
-		{
+		bool isEmpty() {
 			if( size == 0 )
 				return true;
 			return false;
 		}
 		
-		int isPresent( int x )
-		{
+		int isPresent( int x ) {
 			for( int i=1; i<=size; i++ )
 				if( x == arr[i].first )
 					return i;
 			return 0;
 		}
 		
-		int getMin()
-		{
+		int getMin() {
 			return arr[1].first;
 		}
 		
-		int getKey( int x )
-		{
+		int getKey( int x ) {
 			for( int i=1; i<=size; i++ )
 				if( x == arr[i].first )
 					return arr[i].second;
 			return -1;
 		}
 		
-		void insert( int key, int value )
-		{
+		void insert( int key, int value ) {
 			size++;
 			arr[size].first = key;
 			arr[size].second = INT_MAX;
@@ -59,14 +51,12 @@ class minPriorityQueue
 			decreaseKey( key, value );
 		}
 		
-		void decreaseKey(int key, int value)
-		{
+		void decreaseKey(int key, int value) {
 			int index = isPresent(key);
 			arr[index].second = value;
 			
 			int parent = index/2;
-			while( parent > 0 && arr[parent].second > arr[index].second )
-			{
+			while( parent > 0 && arr[parent].second > arr[index].second ) {
 				swap( &arr[parent].first, &arr[index].first );
 				swap( &arr[parent].second, &arr[index].second );
 				
@@ -75,8 +65,7 @@ class minPriorityQueue
 			}
 		}
 		
-		void minHeapify( int index )
-		{
+		void minHeapify( int index ) {
 			int left = 2*index;
 			int right = 2*index + 1;
 			
@@ -89,8 +78,7 @@ class minPriorityQueue
 			if( right <= size && arr[right].second < arr[smallest].second )
 				smallest = right;
 				
-			if( index != smallest )
-			{
+			if( index != smallest ) {
 				swap( &arr[index].first, &arr[smallest].first );
 				swap( &arr[index].second, &arr[smallest].second );
 				
@@ -98,8 +86,7 @@ class minPriorityQueue
 			} 
 		}
 		
-		int extractMin( int *x )
-		{
+		int extractMin( int *x ) {
 			int min = arr[1].first;
 			*x = arr[1].second;
 			
@@ -114,14 +101,12 @@ class minPriorityQueue
 		}
 };
 
-class Graph
-{
+class Graph {
 	int V;
 	vector < pair<int, int> > *adj;
 	
 	public:
-		Graph(int V)
-		{
+		Graph(int V) {
 			this->V = V;
 			this->adj = new vector < pair<int, int> >[V];
 		}
@@ -202,7 +187,7 @@ int main()
 	{
 		if( choice != 1 )
 		{
-			cout << "Wrong entry!!\n";
+			cout << "Wrong entry!!" << endl;
 			cout << "Do you want to enter edges? (1.Yes 2.No) : ";
 			cin >> choice;
 			continue;
